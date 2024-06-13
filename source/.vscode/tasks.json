@@ -1,0 +1,80 @@
+ {
+    "version": "2.0.0",
+    "command": "sh",
+    "args": ["-c"],
+    "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "clear": true,
+    },
+    "tasks": [
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "../"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "make",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
+            "args": [],
+            "dependsOn": [
+                "cmake",
+                "compile shaders"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "rm",
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
+            "args": [
+                "-rfv",
+                "*"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "clean shaders",
+            "type": "shell",
+            "command": "rm",
+            "options": {
+                "cwd": "${workspaceRoot}/assets/shaders/compiled"
+            },
+            "args": [
+                "-rfv",
+                "*"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "compile shaders",
+            "type": "shell",
+            "command": "./compile.sh",
+            "options": {
+                "cwd": "${workspaceRoot}/assets/shaders"
+            },
+            "problemMatcher": []
+        }
+    ]
+}
