@@ -22,6 +22,14 @@ namespace engine
 
         size_t size() { return values.size(); }
 
+        void clear()
+        {
+            for(std::vector<particle>::iterator it = values.begin(); it != values.end(); ++it)				
+			{
+                it->clear();
+            }
+        }
+
     protected:
         void makeNull() { }
         void cleanup() { }

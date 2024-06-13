@@ -3,6 +3,7 @@
 #include "graphics/vulkan/depth.h"
 #include "graphics/window.h"
 #include "core/thread.h"
+#include "tracer/tracer.h"
 #include "camera.h"
 #include "pipeline.h"
 #include "particles.h"
@@ -42,9 +43,13 @@ namespace engine
         ::engine::particles *particles;
 
         vulkan::depth *depth;
-        vulkan::texture *texture;
+        //vulkan::texture *texture;
         vulkan::interfaces::frames *clearDepthFrames, *reuseDepthFrames;
-        pipeline::pipeline *a, *b, *c;
+        pipeline::pipeline *a;//, *b, *c;
+
+        tracer::tracer data;
+
+        int currentFrame;
 
         bool init;
 
@@ -52,10 +57,10 @@ namespace engine
 		void background(core::thread *bt);
 
     public:
-        engine(settings _settings) { makeNull(); reset(_settings); }
+        engine(settings _settings, tracer::tracer data) { makeNull(); reset(_settings, data); }
         ~engine() { cleanup(); }
 
-        void reset(settings _settings);
+        void reset(settings _settings, tracer::tracer data);
         bool initalised() { return init; }
 
         void run();

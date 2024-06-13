@@ -90,7 +90,7 @@ void engine::pipeline::pipeline::update(particles *_particles)
 		{
 			matrices[count].matrix = primatives::matrices::translation({it->x,it->y,it->z});
 			matrices[count].colour = primatives::vector3(it->red,it->green,it->blue);
-			it->update();
+			//it->update();
 			++count;
 		}
 	}

@@ -16,12 +16,17 @@ namespace engine
 	public:
 		particle() 
         { 
-            x = y = z = 0.0f; 
+			clear();
+		}
+
+		void clear()
+		{
+			x = y = z = 0.0f; 
             visible = false; 
 			type = 0;
-			
-        }
+		}
 
+/*
 		void update(float multipler = 1.0f)
 		{
 			//y += (0.001f * multipler);
@@ -31,6 +36,7 @@ namespace engine
 				visible = false;
 			}
 		}
+		*/
 	};
 };
 

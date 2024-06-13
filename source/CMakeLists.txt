@@ -21,6 +21,7 @@ file(GLOB SOURCE CONFIGURE_DEPENDS
 "${PROJECT_SOURCE_DIR}/source/graphics/vulkan/shader/*.cpp"
 "${PROJECT_SOURCE_DIR}/source/graphics/*.cpp"
 "${PROJECT_SOURCE_DIR}/source/core/*.cpp"
+"${PROJECT_SOURCE_DIR}/source/tracer/*.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
