@@ -119,6 +119,9 @@ void engine::engine::run()
 	const float offset_z = -grid_d;
 	const float transisition_inc = 0.001f;
 	const float max_words = 36.0f;
+	const float camera_inc = 0.09f;
+
+	float camera_x = 0.8f, camera_y = -0.8f, camera_z = -3.8f;
 
 	tracer::frame current_frame, previous_frame;
 	bool transistion = false;
@@ -187,11 +190,42 @@ void engine::engine::run()
 
 					std::cout << "\r\n";
 				}
-				/*else if (value == '1')
+				else if (value == 'a')
 				{
-					camera->position(-1.0,0.0f,0.0f);
-					std::cout << "moo\r\n";
-				}*/
+					camera_x -= camera_inc;
+					camera->position(camera_x,camera_y,camera_z);
+					camera->buffer->update();					
+				}
+				else if (value == 'd')
+				{
+					camera_x += camera_inc;
+					camera->position(camera_x,camera_y,camera_z);
+					camera->buffer->update();					
+				}
+				else if (value == 'w')
+				{
+					camera_y -= camera_inc;
+					camera->position(camera_x,camera_y,camera_z);
+					camera->buffer->update();					
+				}
+				else if (value == 's')
+				{
+					camera_y += camera_inc;
+					camera->position(camera_x,camera_y,camera_z);
+					camera->buffer->update();					
+				}
+				else if (value == 'r')
+				{
+					camera_z -= camera_inc;
+					camera->position(camera_x,camera_y,camera_z);
+					camera->buffer->update();					
+				}
+				else if (value == 'f')
+				{
+					camera_z += camera_inc;
+					camera->position(camera_x,camera_y,camera_z);
+					camera->buffer->update();					
+				}
 			}
 		}
 
