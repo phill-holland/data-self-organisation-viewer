@@ -49,7 +49,7 @@ namespace engine
 
         tracer::tracer data;
 
-        int currentFrame;
+        //int currentFrame;
 
         bool init;
 

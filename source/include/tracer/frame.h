@@ -1,4 +1,5 @@
 #include "tracer/trace.h"
+#include "tracer/point.h"
 #include <vector>
 #include <string>
 
@@ -23,6 +24,7 @@ namespace tracer
         std::size_t size() { return data.size(); }
 
         bool get(trace &destination, int index);
+        bool find(trace &destination, point value);
 
         void deserialise(std::string source);
     };

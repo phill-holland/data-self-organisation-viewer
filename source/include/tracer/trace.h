@@ -16,6 +16,7 @@ namespace tracer
         bool stationary;
 
         std::string collision;
+        std::string links;
 
     public:
         trace() { clear(); }
@@ -28,6 +29,7 @@ namespace tracer
             epoch = 0;
             stationary = false;
             collision.clear();
+            links.clear();
         }
 
         void deserialise(std::string source);

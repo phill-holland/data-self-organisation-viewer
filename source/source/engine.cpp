@@ -33,7 +33,7 @@ void engine::engine::reset(settings _settings, tracer::tracer data)
 {
     init = false; cleanup();
 
-	accumlator = 0.0; currentFrame = 0;
+	accumlator = 0.0; //currentFrame = 0;
 
 	this->data = data;
 
@@ -112,11 +112,20 @@ void engine::engine::reset(settings _settings, tracer::tracer data)
 }
 
 void engine::engine::run()
-{
-    //const int COLUMNS = 6;
-	//std::vector<int> columns(COLUMNS);
-	//for(int i = 0; i < COLUMNS; ++i) columns[i] = 0;
+{    
+	const float grid_w = 6.0f, grid_h = 6.0f, grid_d = 6.0f;
+	const float offset_x = -(grid_w / 2.0f);
+	const float offset_y = -(grid_h / 2.0f);
+	const float offset_z = -grid_d;
+	const float transisition_inc = 0.001f;
+	const float max_words = 36.0f;
 
+	tracer::frame current_frame, previous_frame;
+	bool transistion = false;
+	float transisition_offset = 0.0f;
+
+	int trace = 0, previous_epoch = 0;
+	
 	window->start();	
 	this->start();
 
@@ -145,109 +154,112 @@ void engine::engine::run()
 
 		char value;
 		if(window->keypressed(value))
-		{			
-			if(value == ' ')
+		{
+			// ***
+			if(!transistion)
 			{
-				//int current = 1;
-				tracer::frame frame;
-				if(data.get(frame, currentFrame++))
+				if(value == ' ')
 				{
-					for(std::vector<particle>::iterator it = particles->values.begin(); it != particles->values.end(); ++it)				
+					tracer::frame frame;
+					if(data.get(frame, trace++))
 					{
-						it->visible = false;
-					}
+						previous_frame = current_frame;
+						current_frame = frame;
 
-					int length = frame.size();
-					if(length > particles->values.size()) length = particles->values.size();
+						transistion = true;
+						transisition_offset = 0.0f;
 
-					for(int i = 0; i < length; ++i)
-					{
-						tracer::trace trace;
-						if(frame.get(trace, i))
+						for(int i = 0; i < current_frame.size(); ++i)
 						{
-							particle &p = particles->values.at(i);
-
-							const float grid_w = 6.0f, grid_h = 6.0f, grid_d = 6.0f;
-							const float offset_x = -(grid_w / 2.0f);
-							const float offset_y = -(grid_h / 2.0f);
-							const float offset_z = -grid_d;//-(grid_d / 2.0f);
-						//	const float offset_x = -2.0f, offset_y = -1.5f, offset_z = -1.5f;
-							p.x = offset_x + ((float)trace.position.x);// * 4.0f;
-							p.y = offset_y + ((float)trace.position.y);// * 4.0f;
-							p.z = offset_z + ((float)trace.position.z);// * 4.0f;
-
-							p.type = 0;
-
-							p.red = 0.0f;
-							p.green = 0.0f;
-							p.blue = 0.0f;
-
-							if(trace.stationary)
+							tracer::trace current_trace;
+							if(current_frame.get(current_trace, i))
 							{
-								p.green = 1.0f;
-								p.blue = 1.0f;
-							}
-							else
-							{
-								const float max_words = 36.0f;
-								p.red = ((float)trace.data.x) / max_words;//1.0f;
-								if(trace.data.y != -1) p.green = ((float)trace.data.y) / max_words;
-								if(trace.data.z != -1) p.blue = ((float)trace.data.z) / max_words;
-							}
+								if(current_trace.epoch != previous_epoch) previous_frame.clear();
+								previous_epoch = current_trace.epoch;
 
-							p.visible = true;
-
-							std::cout << "add pos(" << trace.position.x << "," << trace.position.y << "," << trace.position.z << ") data(" << trace.data.x << "," << trace.data.y << "," << trace.data.z << ") Col=" + trace.collision + "\r\n";
-						}
+								std::cout << "add h=" << (current_trace.stationary ? "1" : "0") << " ";
+								std::cout << "e=" << current_trace.epoch << " ";
+								std::cout << "pos(" << current_trace.position.x << "," << current_trace.position.y << "," << current_trace.position.z << ") ";
+								std::cout << "data(" << current_trace.data.x << "," << current_trace.data.y << "," << current_trace.data.z << ") Col=" + current_trace.collision + " Lnk=" + current_trace.links + "\r\n";
+							}
+						}				
 					}
 
 					std::cout << "\r\n";
 				}
-				else
+				/*else if (value == '1')
 				{
-					currentFrame = 0;
-				}
-
-
-				/*				
-				for(std::vector<particle>::iterator it = particles->values.begin(); it != particles->values.end(); ++it)				
-				{
-					if(!it->visible) 
-					{						
-						int t1 = (std::uniform_int_distribution<int>{0, COLUMNS - 1})(generator);
-						if(columns[t1] == 0)
-						{
-							columns[t1] = 2000;
-
-							it->visible = true;
-							it->x = (t1 * 1.5f) - 4.0f;
-							it->y = -3.5f;
-							it->z = 0.0f;
-
-							it->red = 0.0f; it->green = 0.0f; it->blue = 0.0f;
-							int t2 = (std::uniform_int_distribution<int>{0, 2})(generator);
-							if(t2 == 0) it->red = 1.0f;
-							else if(t2 == 1) it->green = 1.0f;
-							else if(t2 == 2) it->blue = 1.0f;
-
-                            //int t3 = (std::uniform_int_distribution<int>{0, 1})(generator);
-							int t3 = (std::uniform_int_distribution<int>{0, 2})(generator);
-                            it->type = t3;
-							//std::cout << "add " << it->x << " " << count << "\r\n";
-						}
-
-						break;
-					}
-				}
-				*/				
-			}			
+					camera->position(-1.0,0.0f,0.0f);
+					std::cout << "moo\r\n";
+				}*/
+			}
 		}
 
-//		for(int i = 0; i < COLUMNS; ++i) 
-//		{
-//			if(columns[i] > 0) columns[i] -= 1;
-//		}
-	}
+		if(transistion)
+		{
+			particles->clear();
+
+			for(int i = 0; i < current_frame.size(); ++i)
+			{
+				tracer::trace current_trace;
+				if(current_frame.get(current_trace, i))
+				{
+					particle &p = particles->values.at(i);					
+					bool stationary = false;
+
+					tracer::trace previous_trace;
+					if(previous_frame.find(previous_trace, current_trace.data))
+					{
+						// transistion
+						tracer::point start = previous_trace.position;
+						tracer::point end = current_trace.position;
+
+						if(start != end)
+						{
+							float delta_x = (float)(end.x - start.x) * transisition_offset;
+							float delta_y = (float)(end.y - start.y) * transisition_offset;
+							float delta_z = (float)(end.z - start.z) * transisition_offset;
+
+							p.x = offset_x + (((float)start.x) + delta_x);
+							p.y = offset_y + (((float)start.y) + delta_y);
+							p.z = offset_z + (((float)start.z) + delta_z);
+						}
+						else
+						{
+							p.x = offset_x + (float)end.x;
+							p.y = offset_y + (float)end.y;
+							p.z = offset_z + (float)end.z;
+						}
+
+						stationary = previous_trace.stationary | current_trace.stationary;
+									
+						p.type = 0;
+
+						p.red = 0.0f;
+						p.green = 0.0f;
+						p.blue = 0.0f;
+
+						if(stationary)
+						{
+							p.green = 1.0f;
+							p.blue = 1.0f;
+						}
+						else
+						{							
+							p.red = ((float)current_trace.data.x) / max_words;
+							if(current_trace.data.y != -1) p.green = ((float)current_trace.data.y) / max_words;
+							if(current_trace.data.z != -1) p.blue = ((float)current_trace.data.z) / max_words;
+						}
+
+						p.visible = true;
+					}					
+				}
+			} 
+
+			transisition_offset += transisition_inc;
+			if(transisition_offset >= 1.0f) transistion = false;
+		}
+	};
 }
 
 void engine::engine::makeNull()

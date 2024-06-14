@@ -14,10 +14,7 @@ namespace tracer
     public:
         tracer() { clear(); }
 
-        void clear()
-        {
-            data.clear();
-        }
+        void clear() { data.clear(); }
 
         bool isempty() { return data.size() == 0; }
         std::size_t size() { return data.size(); }

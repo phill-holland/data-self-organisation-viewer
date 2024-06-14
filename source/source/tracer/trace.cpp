@@ -42,6 +42,10 @@ void tracer::trace::deserialise(std::string source)
                 {
                     collision = str_equals;
                 }
+                else if(name.compare("Lnk") == 0)
+                {
+                    links = str_equals;
+                }
                 else if(name.compare("E") == 0)
                 {
                     epoch = std::atoi(str_equals.c_str());

@@ -9,6 +9,20 @@ bool tracer::frame::get(trace &destination, int index)
     return true;
 }
 
+bool tracer::frame::find(trace &destination, point value)
+{
+    for(auto &it:data)
+    {
+        if(it.data == value)
+        {
+            destination = it;
+            return true;
+        }
+    }
+
+    return false;
+}
+        
 void tracer::frame::deserialise(std::string source)
 {
     tracer::trace temp;
