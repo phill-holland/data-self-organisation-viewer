@@ -120,8 +120,10 @@ void engine::engine::run()
 	const float transisition_inc = 0.001f;
 	const float max_words = 36.0f;
 	const float camera_inc = 0.09f;
+	const float camera_rot_inc = 0.01f;
 
 	float camera_x = 0.8f, camera_y = -0.8f, camera_z = -3.8f;
+	float camera_rot_x = 0.0f, camera_rot_y = 0.0f, camera_rot_z = 0.0f;
 
 	tracer::frame current_frame, previous_frame;
 	bool transistion = false;
@@ -161,6 +163,8 @@ void engine::engine::run()
 			// ***
 			if(!transistion)
 			{
+				bool update_camera = false;
+
 				if(value == ' ')
 				{
 					tracer::frame frame;
@@ -193,38 +197,81 @@ void engine::engine::run()
 				else if (value == 'a')
 				{
 					camera_x -= camera_inc;
-					camera->position(camera_x,camera_y,camera_z);
-					camera->buffer->update();					
+					update_camera = true;
+					//camera->position(camera_x,camera_y,camera_z);
+					//camera->buffer->update();					
 				}
 				else if (value == 'd')
 				{
 					camera_x += camera_inc;
-					camera->position(camera_x,camera_y,camera_z);
-					camera->buffer->update();					
+					update_camera = true;
+					//camera->position(camera_x,camera_y,camera_z);
+					//camera->buffer->update();					
 				}
 				else if (value == 'w')
 				{
 					camera_y -= camera_inc;
-					camera->position(camera_x,camera_y,camera_z);
-					camera->buffer->update();					
+					update_camera = true;
+					//camera->position(camera_x,camera_y,camera_z);
+					//camera->buffer->update();					
 				}
 				else if (value == 's')
 				{
 					camera_y += camera_inc;
-					camera->position(camera_x,camera_y,camera_z);
-					camera->buffer->update();					
+					update_camera = true;
+					//camera->position(camera_x,camera_y,camera_z);
+					//camera->buffer->update();					
 				}
 				else if (value == 'r')
 				{
 					camera_z -= camera_inc;
-					camera->position(camera_x,camera_y,camera_z);
-					camera->buffer->update();					
+					update_camera = true;
+					//camera->position(camera_x,camera_y,camera_z);
+					//camera->buffer->update();					
 				}
 				else if (value == 'f')
 				{
 					camera_z += camera_inc;
-					camera->position(camera_x,camera_y,camera_z);
-					camera->buffer->update();					
+					update_camera = true;
+					//camera->position(camera_x,camera_y,camera_z);
+					//camera->buffer->update();					
+				}
+				else if (value == 'i')
+				{
+					camera_rot_x += camera_rot_inc;
+					update_camera = true;
+				}
+				else if (value == 'k')
+				{
+					camera_rot_x -= camera_rot_inc;
+					update_camera = true;
+				}
+				else if (value == 'j')
+				{
+					camera_rot_y += camera_rot_inc;
+					update_camera = true;
+				}
+				else if (value == 'l')
+				{
+					camera_rot_y -= camera_rot_inc;
+					update_camera = true;
+				}
+
+				if(update_camera)
+				{
+					transformation t;
+					
+					primatives::matrices::matrix4x4 tt = primatives::matrices::translation({camera_x, camera_y, camera_z});
+					primatives::matrices::matrix4x4 rr = primatives::matrices::rotation::x(camera_rot_x) * primatives::matrices::rotation::y(camera_rot_y);
+
+					t.world = tt;// * rr;
+					t.object = rr;
+					//t.object.identity();
+
+					camera->set(t);
+					camera->buffer->update();
+
+					//transform.world = primatives::matrices::translation({x, y, z});
 				}
 			}
 		}

@@ -45,6 +45,11 @@ namespace engine
             void reset(vulkan::vulkan *_vulkan, settings _settings);
             bool initalised() { return init; }
 
+            void set(transformation &source)
+            {
+                transform = source;
+            }
+
             void position(float x, float y, float z)
             {
                 transform.world = primatives::matrices::translation({x, y, z});

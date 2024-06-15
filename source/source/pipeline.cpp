@@ -7,7 +7,14 @@
 #include <iostream>
 #include <thread>
 
-void engine::pipeline::pipeline::reset(vulkan::vulkan *_vulkan, vulkan::interfaces::frames *_frames, camera::camera *_camera, vulkan::interfaces::descriptor *_descriptor, vulkan::texture *_texture, particles *_particles, int _type, settings _settings)
+void engine::pipeline::pipeline::reset(vulkan::vulkan *_vulkan, 
+										vulkan::interfaces::frames *_frames, 
+										camera::camera *_camera, 
+										vulkan::interfaces::descriptor *_descriptor, 
+										vulkan::texture *_texture, 
+										particles *_particles, 
+										int _type, 
+										settings _settings)
 {
     init = false; cleanup();
 
