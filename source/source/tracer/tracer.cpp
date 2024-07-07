@@ -21,7 +21,7 @@ bool tracer::tracer::load(std::string filename)
 
     for(std::string value; std::getline(source,value); )
     {
-        if(value.size() != 0)
+        if((value.size() != 0)&&(value.compare("\r") != 0))
         {
             temp.deserialise(value);
         }

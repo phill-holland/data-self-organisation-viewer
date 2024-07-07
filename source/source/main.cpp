@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 {
 	tracer::tracer data;
 
-	if(data.load("assets/data/trace.txt"))
+	if(data.load("assets/data/trace_triple5.txt"))
 	{
 		engine::engine e(engine::settings(800, 800), data);
 		e.run();
