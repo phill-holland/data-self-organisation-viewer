@@ -198,6 +198,8 @@ bool vulkan::stage::BindPipeline(VkCommandBuffer &vkCommandBuffer, VkPipelineLay
 
         ++setIndex;
     }            
+
+    return setIndex > 0;
 }
 
 bool vulkan::stage::Draw(VkCommandBuffer &vkCommandBuffer, VkBuffer vkIndirectBuffer)

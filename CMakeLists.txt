@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(data-self-organisation-viewer)
+project(data-self-organisation-viewer LANGUAGES CXX)
 
 set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_CXX_STANDARD 20)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -11,6 +12,7 @@ find_package(X11 REQUIRED)
 
 include_directories("include")
 include_directories(${Vulkan_INCLUDE_DIR})
+
 
 set(ALL_LIBS ${Vulkan_LIBRARY})
 
@@ -25,6 +27,8 @@ file(GLOB SOURCE CONFIGURE_DEPENDS
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 

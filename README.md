@@ -1,21 +1,35 @@
-<b>Example of Vulkan Boiler Plate Initalisation and Example Triangle</b>
+# Data Self Organisation - 3D Data Viewer
 
-This has been primarily written on an Ubuntu based development environment!
+this application relates to the output for;
 
-To Run (within VSCode);
+https://www.github.com/phill-holland/data-self-organisation-vi
 
-<ul>
-<li><b>Ensure project is open within the development container</b></li>
-<li><b>Hit F5</b></li>
-</ul>
+This is a tiny, tiny tiny small implementation of a Vulkan graphics engine, it allowed for the dynamic addition and removal of 3d objects within the engine.
 
-This application was written in C++ using VSCode and includes a devcontainer setup file, which should create a self-contained environment with all the below requirements installed;
+You'll be prompt when the program starts to select a input text trace file (stored in the assets/data/traces directory).
 
-<ul>
-<li>CMake</li>
-<li>Vulkan</li>
-<li>Shaders</li>
-</ul>
+You can then step through each iteration of the trace with the space bar.  Each trace demonstrates a program for storing data, which will produce the same output, these programs are found using a genetic algorithm (more details can be found in the repo link above)
+
+The aim is to analysis and find any common patterns in each program generated.
+
+# Keys
+
+space - step through program
+q,w,s,d - move view camera along x & y axis
+i,j,k,l - rotate camera along x & axis
+r,f - zoom in/out
+
+# Todo
+
+- It's difficult at the moment to relate the data each cube visualises (words), this needs to be improved by extending texture mapping implementation
+
+- Difficult to tell when one cube collides with another cube (and thereby generates output)
+
+# Demonstrates
+
+- CMake
+- Vulkan
+- Shaders
 
 It should be possible to build and run the code with alternative development environments, outside of VSCode.
 
@@ -25,17 +39,11 @@ To download VSCode;
 
 https://code.visualstudio.com/download
 
-The VSCode development container plugin is installed;
+# Prerequisites
 
-https://code.visualstudio.com/docs/remote/containers
+- CMake
 
-Docker must also be installed;
-
-https://docs.docker.com/get-docker/
-
-This application, however is configured with linux based containers, and will not work correctly on Windows without modification.
-
-<b>Installing Vulkan Shaders</b>
+- Installing Vulkan Shaders
 
 See below for how to install the Vulkan-SDK (without it, the code will not compile!)
 
