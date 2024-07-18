@@ -43,13 +43,11 @@ namespace engine
         ::engine::particles *particles;
 
         vulkan::depth *depth;
-        //vulkan::texture *texture;
+
         vulkan::interfaces::frames *clearDepthFrames, *reuseDepthFrames;
-        pipeline::pipeline *a;//, *b, *c;
+        pipeline::pipeline *a;
 
         tracer::tracer data;
-
-        //int currentFrame;
 
         bool init;
 

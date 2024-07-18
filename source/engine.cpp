@@ -53,31 +53,6 @@ void engine::engine::reset(settings _settings, tracer::tracer data)
     if(!particles->initalised()) return;
 
 	particles->clear();
-	/*
-    for(int i = 0; i < total; ++i)
-    {
-        particles->values[i].type = 0;//i % 3;
-    }
-	*/	
-
-	/*	
-	graphics::texture tt(256,256);
-	tt.clear(graphics::colour(127,0,0));
-	tt.circle(55,55,20,graphics::colour(255,255,0));
-	tt.circle(155,155,20,graphics::colour(255,255,127));
-
-	graphics::targa::targa targa1(&tt);
-	targa1.save(std::string("assets/images/test.tga"));
-	*/
-/*
-	graphics::texture texture(256,256);
-	graphics::targa::targa targa(&texture);
-	if(!targa.load(std::string("assets/images/test.tga"))) return;
-
-	this->texture = vulkan->createTexture(256, 256);
-	if(this->texture == NULL) return;	
-	//this->texture = NULL;
-*/
 	depth = vulkan->createDepthBuffer();
 
 	clearDepthFrames = vulkan->createFrames<vulkan::frames::framesClearDepthBuffer>(depth);
@@ -91,23 +66,6 @@ void engine::engine::reset(settings _settings, tracer::tracer data)
     if(a == NULL) return;
     if(!a->initalised()) return;
 
-/*
-    b = new pipeline::pipeline(vulkan, reuseDepthFrames, camera, &d1, NULL, particles, 1, pipeline::settings(std::string("assets/shaders/compiled/shader.frag.spv"),std::string("assets/shaders/compiled/wobble.vert.spv"),std::string("assets/meshes/cube2.obj")));
-    if(b == NULL) return;
-    if(!b->initalised()) return;
-
-	vulkan::vertices::texture::descriptor d2;
-	c = new pipeline::pipeline(vulkan, reuseDepthFrames, camera, &d2, this->texture, particles, 2, pipeline::settings(std::string("assets/shaders/compiled/texture.frag.spv"),std::string("assets/shaders/compiled/texture.vert.spv"),std::string("assets/meshes/cube.obj")));
-    if(c == NULL) return;
-    if(!c->initalised()) return;
-*/
-/*
-	if(this->texture != NULL)
-	{
-		this->texture->copy(&texture);
-		this->texture->transfer(c->pipe);
-	}
-*/
     init = true;
 }
 
@@ -154,7 +112,7 @@ void engine::engine::run()
 			frame = 0;
 		}
 
-		std::vector<vulkan::pipeline*> pipelines = { a->pipe };//, b->pipe, c->pipe };
+		std::vector<vulkan::pipeline*> pipelines = { a->pipe };
 		vulkan->renderPipelines(pipelines);
 
 		char value;
@@ -198,43 +156,31 @@ void engine::engine::run()
 				{
 					camera_x -= camera_inc;
 					update_camera = true;
-					//camera->position(camera_x,camera_y,camera_z);
-					//camera->buffer->update();					
 				}
 				else if (value == 'd')
 				{
 					camera_x += camera_inc;
 					update_camera = true;
-					//camera->position(camera_x,camera_y,camera_z);
-					//camera->buffer->update();					
 				}
 				else if (value == 'w')
 				{
 					camera_y -= camera_inc;
 					update_camera = true;
-					//camera->position(camera_x,camera_y,camera_z);
-					//camera->buffer->update();					
 				}
 				else if (value == 's')
 				{
 					camera_y += camera_inc;
 					update_camera = true;
-					//camera->position(camera_x,camera_y,camera_z);
-					//camera->buffer->update();					
 				}
 				else if (value == 'r')
 				{
 					camera_z -= camera_inc;
 					update_camera = true;
-					//camera->position(camera_x,camera_y,camera_z);
-					//camera->buffer->update();					
 				}
 				else if (value == 'f')
 				{
 					camera_z += camera_inc;
 					update_camera = true;
-					//camera->position(camera_x,camera_y,camera_z);
-					//camera->buffer->update();					
 				}
 				else if (value == 'i')
 				{
