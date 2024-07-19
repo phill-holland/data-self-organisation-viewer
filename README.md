@@ -43,7 +43,7 @@ https://code.visualstudio.com/download
 
 - CMake
 
-- Installing Vulkan Shaders
+- Vulkan Shaders SDK
 
 See below for how to install the Vulkan-SDK (without it, the code will not compile!)
 
