@@ -6,7 +6,7 @@ https://www.github.com/phill-holland/data-self-organisation-vi
 
 This is a tiny, tiny tiny small implementation of a Vulkan graphics engine, it allowed for the dynamic addition and removal of 3d objects within the engine.
 
-You'll be prompt when the program starts to select a input text trace file (stored in the assets/data/traces directory).
+You'll be prompted when the program starts to select a input text trace file (stored in the assets/data/traces directory).
 
 You can then step through each iteration of the trace with the space bar.  Each trace demonstrates a program for storing data, which will produce the same output, these programs are found using a genetic algorithm (more details can be found in the repo link above)
 
