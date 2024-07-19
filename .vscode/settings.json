@@ -1,7 +1,8 @@
 {
     "cmake.configureOnOpen": false,
     "files.associations": {
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "iostream": "cpp"
     },
     "cmake.configureSettings": 
     {

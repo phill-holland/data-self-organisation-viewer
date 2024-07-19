@@ -34,7 +34,6 @@ namespace engine
             bool init;
 
         public:
-            //vulkan::buffer *buffer;
             ::vulkan::interfaces::buffer *buffer;
             ::vulkan::constants constants;
 

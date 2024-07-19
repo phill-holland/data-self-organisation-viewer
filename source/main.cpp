@@ -55,14 +55,12 @@ std::string selection(const std::string directory)
 	int selected = -1;
 	do
 	{
-		char value;
+		std::string value;
 		std::cin >> value;
-		if((value >= '0')&&(value <= '9'))
-		{
-			selected = ((int)value) - 48;
-			if((selected < 0)||(selected > files.size()))
-				selected = -1;
-		}
+
+		selected = atoi(value.c_str());
+		if((selected < 0)||(selected > files.size()))
+			selected = -1;
 
 	}while(selected == -1);
 
