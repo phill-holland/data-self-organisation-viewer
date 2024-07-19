@@ -12,12 +12,12 @@ You can then step through each iteration of the trace with the space bar.  Each 
 
 The aim is to analysis and find any common patterns in each program generated.
 
-# Keys
+# Control Keys
 
-space - step through program
-q,w,s,d - move view camera along x & y axis
-i,j,k,l - rotate camera along x & axis
-r,f - zoom in/out
+- space: step through program
+- q,w,s,d: move view camera along x & y axis
+- i,j,k,l: rotate camera along x & axis
+- r,f: zoom in/out
 
 # Todo
 
